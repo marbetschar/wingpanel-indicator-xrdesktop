@@ -1,5 +1,5 @@
 project(
-    'bluetooth',
+    'xr',
     'vala', 'c',
     version: '2.1.6'
 )
@@ -26,10 +26,7 @@ wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', 
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
-    'src/Services/Adapter.vala',
-    'src/Services/Device.vala',
     'src/Services/Manager.vala',
-    'src/Widgets/Device.vala',
     'src/Widgets/DisplayWidget.vala',
     'src/Widgets/PopoverWidget.vala',
     gresource,

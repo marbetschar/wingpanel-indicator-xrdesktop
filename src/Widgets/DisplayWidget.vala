@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015-2021 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2021 elementary LLC. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -15,22 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class BluetoothIndicator.Widgets.DisplayWidget : Gtk.Spinner {
-    public BluetoothIndicator.Services.ObjectManager object_manager { get; construct; }
+public class XRIndicator.Widgets.DisplayWidget : Gtk.Spinner {
+    public XRIndicator.Services.ObjectManager object_manager { get; construct; }
 
     private unowned Gtk.StyleContext style_context;
 
-    public DisplayWidget (BluetoothIndicator.Services.ObjectManager object_manager) {
+    public DisplayWidget (XRIndicator.Services.ObjectManager object_manager) {
         Object (object_manager: object_manager);
     }
 
     construct {
         var provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("io/elementary/wingpanel/bluetooth/indicator.css");
+        provider.load_from_resource ("io/elementary/wingpanel/xr/indicator.css");
 
         style_context = get_style_context ();
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        style_context.add_class ("bluetooth-icon");
+        style_context.add_class ("xr-icon");
         style_context.add_class ("disabled");
 
         object_manager.global_state_changed.connect ((state, connected) => {
@@ -70,19 +70,19 @@ public class BluetoothIndicator.Widgets.DisplayWidget : Gtk.Spinner {
 
         if (state) {
             style_context.remove_class ("disabled");
-            context = _("Middle-click to turn Bluetooth off");
+            context = _("Middle-click to turn XR off");
             if (connected) {
                 style_context.add_class ("paired");
-                description = _("Bluetooth connected");
+                description = _("XR connected");
             } else {
                 style_context.remove_class ("paired");
-                description = _("Bluetooth is on");
+                description = _("XR is on");
             }
         } else {
             style_context.remove_class ("paired");
             style_context.add_class ("disabled");
-            description = _("Bluetooth is off");
-            context = _("Middle-click to turn Bluetooth on");
+            description = _("XR is off");
+            context = _("Middle-click to turn XR on");
         }
 
         tooltip_markup = "%s\n%s".printf (

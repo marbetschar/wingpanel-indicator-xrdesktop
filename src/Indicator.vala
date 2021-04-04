@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015-2018 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2021 elementary LLC. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class BluetoothIndicator.Indicator : Wingpanel.Indicator {
+public class XRIndicator.Indicator : Wingpanel.Indicator {
     public bool is_in_session { get; construct; default = false; }
 
     private Widgets.PopoverWidget popover_widget;
@@ -24,13 +24,13 @@ public class BluetoothIndicator.Indicator : Wingpanel.Indicator {
 
     public Indicator (bool is_in_session) {
         Object (
-            code_name: Wingpanel.Indicator.BLUETOOTH,
+            code_name: Wingpanel.Indicator.XR,
             is_in_session: is_in_session
         );
     }
 
     construct {
-        object_manager = new BluetoothIndicator.Services.ObjectManager ();
+        object_manager = new XRIndicator.Services.ObjectManager ();
         object_manager.bind_property ("has-object", this, "visible", GLib.BindingFlags.SYNC_CREATE);
 
         if (object_manager.has_object) {
@@ -69,8 +69,8 @@ public class BluetoothIndicator.Indicator : Wingpanel.Indicator {
 }
 
 public Wingpanel.Indicator get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Activating Bluetooth Indicator");
-    var indicator = new BluetoothIndicator.Indicator (server_type == Wingpanel.IndicatorManager.ServerType.SESSION);
+    debug ("Activating XR Indicator");
+    var indicator = new XRIndicator.Indicator (server_type == Wingpanel.IndicatorManager.ServerType.SESSION);
 
     return indicator;
 }

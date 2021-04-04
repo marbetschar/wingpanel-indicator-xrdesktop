@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2019 elementary, Inc. <contact@elementary.io> -->
+<!-- Copyright 2021 elementary, Inc. <contact@elementary.io> -->
 <component type="addon">
-  <id>io.elementary.wingpanel.bluetooth</id>
+  <id>io.elementary.wingpanel.xr</id>
   <extends>io.elementary.wingpanel</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LGPL-2.1</project_license>
-  <name>Bluetooth Indicator</name>
-  <summary>Connect and disconnect paired bluetooth devices</summary>
-  <icon type="stock">preferences-bluetooth</icon>
+  <name>XR Indicator</name>
+  <summary>Connect and disconnect paired xr devices</summary>
+  <icon type="stock">preferences-xr</icon>
   <releases>
-    <release version="2.1.6" date="2020-12-23" urgency="medium">
+    <release version="x.y.z" date="2020-12-23" urgency="medium">
       <description>
-        <p>Prevent showing duplicate devices</p>
-        <p>Fix animated icon when disabling Bluetooth</p>
-        <p>Fallback device names to their device type instead of "(null)"</p>
-        <p>Updated translations</p>
-      </description>
-    </release>
-    <release version="2.1.5" date="2020-04-08" urgency="medium">
-      <description>
-        <p>Updated translations</p>
-      </description>
-    </release>
-    <release version="2.1.4" date="2019-11-25" urgency="medium">
-      <description>
-        <p>Updated translations</p>
+        <p>...</p>
       </description>
     </release>
   </releases>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/elementary/wingpanel-indicator-bluetooth/master/data/screenshot.png</image>
+      <image>https://raw.githubusercontent.com/marbetschar/wingpanel-indicator-xr/master/data/screenshot.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1">
@@ -62,13 +49,13 @@
     <content_attribute id="money-purchasing">none</content_attribute>
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
-  <translation type="gettext">io.elementary.wingpanel.bluetooth</translation>
+  <translation type="gettext">io.elementary.wingpanel.xr</translation>
   <developer_name>elementary, Inc.</developer_name>
   <url type="homepage">https://elementary.io/</url>
-  <url type="bugtracker">https://github.com/elementary/wingpanel-indicator-bluetooth/issues/new/choose</url>
+  <url type="bugtracker">https://github.com/elementary/wingpanel-indicator-xr/issues/new/choose</url>
   <url type="donation">https://elementary.io/get-involved#funding</url>
   <url type="help">https://elementaryos.stackexchange.com/questions/tagged/wingpanel</url>
-  <url type="translate">https://l10n.elementary.io/projects/wingpanel/wingpanel-indicator-bluetooth/</url>
+  <url type="translate">https://l10n.elementary.io/projects/wingpanel/wingpanel-indicator-xr/</url>
   <update_contact>contact_AT_elementary.io</update_contact>
   <project_group>elementary</project_group>
 </component>

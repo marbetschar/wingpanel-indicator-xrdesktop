@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-	<schema path="/io/elementary/desktop/wingpanel/bluetooth/" id="io.elementary.desktop.wingpanel.bluetooth">
-		<key type="b" name="bluetooth-enabled">
+	<schema path="/io/elementary/desktop/wingpanel/xr/" id="io.elementary.desktop.wingpanel.xr">
+		<key type="b" name="xr-enabled">
 			<default>true</default>
-			<summary>Sets the last bluetooth state to re-apply on reboot</summary>
+			<summary>Sets the XR state</summary>
 			<description></description>
 		</key>
 	</schema>
