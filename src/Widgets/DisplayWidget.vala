@@ -33,11 +33,10 @@ public class XRDesktopIndicator.Widgets.DisplayWidget : Gtk.Spinner {
         style_context.add_class ("xrdesktop-icon");
         style_context.add_class ("disabled");
 
-        dbus_service.notify["enabled"].connect (update_icon);
+        dbus_service.enabled_changed.connect (update_icon);
     }
 
-    private void update_icon () {
-        var enabled = dbus_service.enabled;
+    private void update_icon (bool enabled) {
         string description;
         string context;
 

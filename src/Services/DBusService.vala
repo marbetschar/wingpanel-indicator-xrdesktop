@@ -21,8 +21,18 @@ public class XRDesktopIndicator.Services.DBusService : Object {
     public signal void enabled_changed (bool enabled);
 
     construct {
-        notify["enabled"].connect (() => {
-            enabled_changed (enabled);
+        notify["enabled"].connect (trigger_enabled_changed);
+
+        enabled_changed.connect ((new_enabled) => {
+            if (new_enabled != enabled) {
+                notify["enabled"].disconnect (trigger_enabled_changed);
+                enabled = new_enabled;
+                notify["enabled"].connect (trigger_enabled_changed);
+            }
         });
+    }
+
+    private void trigger_enabled_changed () {
+        enabled_changed (enabled);
     }
 }
