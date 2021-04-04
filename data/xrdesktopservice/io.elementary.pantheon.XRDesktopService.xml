@@ -1,5 +1,7 @@
 <node>
     <interface name="io.elementary.pantheon.XRDesktopService">
-        <property name="enabled" type="b" access="readwrite" />
+        <property name="enabled" type="b" access="readwrite">
+            <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true" />
+        </property>
     </interface>
 </node>
