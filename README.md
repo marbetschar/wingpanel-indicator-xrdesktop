@@ -1,4 +1,4 @@
-# Wingpanel XR Indicator
+# Wingpanel XR Desktop Indicator
 
 ![Screenshot](data/screenshot.png?raw=true)
 
