@@ -1,5 +1,5 @@
 project(
-    'xr',
+    'xrdesktop',
     'vala', 'c',
     version: '2.1.6'
 )
@@ -27,7 +27,7 @@ shared_module(
     meson.project_name(),
     'src/Indicator.vala',
     'src/Services/Manager.vala',
-    'src/Services/XRService.vala',
+    'src/Services/XRDesktopService.vala',
     'src/Widgets/DisplayWidget.vala',
     'src/Widgets/PopoverWidget.vala',
     gresource,
@@ -44,5 +44,3 @@ shared_module(
 )
 
 subdir('data')
-
-meson.add_install_script('meson/post_install.py')

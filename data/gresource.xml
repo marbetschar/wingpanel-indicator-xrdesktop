@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/io/elementary/wingpanel/xr">
+  <gresource prefix="/io/elementary/wingpanel/xrdesktop">
     <file alias="indicator.css" compressed="true">indicator.css</file>
-    <file alias="xr-active-symbolic" compressed="true">xr-active-symbolic.svg</file>
-    <file alias="xr-disabled-symbolic" compressed="true">xr-disabled-symbolic.svg</file>
+    <file alias="xrdesktop-active-symbolic" compressed="true">xrdesktop-active-symbolic.svg</file>
+    <file alias="xrdesktop-disabled-symbolic" compressed="true">xrdesktop-disabled-symbolic.svg</file>
   </gresource>
 </gresources>

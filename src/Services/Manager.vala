@@ -72,8 +72,8 @@ public class XRIndicator.Services.ObjectManager : Object {
     }
 
     private void on_interface_added (GLib.DBusObject object, GLib.DBusInterface iface) {
-        if (iface is XRIndicator.Services.XRService) {
-            unowned XRIndicator.Services.XRService xr = (XRIndicator.Services.XRService) iface;
+        if (iface is XRIndicator.Services.XRDesktopService) {
+            unowned XRIndicator.Services.XRDesktopService xr = (XRIndicator.Services.XRDesktopService) iface;
 
             ((DBusProxy) xr).g_properties_changed.connect ((changed, invalid) => {
                 var enabled = changed.lookup_value ("enabled", new VariantType ("b"));
@@ -87,7 +87,7 @@ public class XRIndicator.Services.ObjectManager : Object {
     }
 
     private void on_interface_removed (GLib.DBusObject object, GLib.DBusInterface iface) {
-        if (iface is XRIndicator.Services.XRService) {
+        if (iface is XRIndicator.Services.XRDesktopService) {
             if (is_enabled) {
                 is_enabled = false;
                 global_state_changed (is_enabled);

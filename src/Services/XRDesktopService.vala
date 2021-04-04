@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-[DBus (name = "io.elementary.pantheon.XRService")]
-public interface XRIndicator.Services.XRService : Object {
+[DBus (name = "io.elementary.pantheon.XRDesktopService")]
+public interface XRIndicator.Services.XRDesktopService : Object {
     public abstract bool enabled { owned get; set; }
 }
