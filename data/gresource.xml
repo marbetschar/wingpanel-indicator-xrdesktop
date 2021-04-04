@@ -2,5 +2,7 @@
 <gresources>
   <gresource prefix="/io/elementary/wingpanel/xr">
     <file alias="indicator.css" compressed="true">indicator.css</file>
+    <file alias="xr-active-symbolic" compressed="true">xr-active-symbolic.svg</file>
+    <file alias="xr-disabled-symbolic" compressed="true">xr-disabled-symbolic.svg</file>
   </gresource>
 </gresources>
