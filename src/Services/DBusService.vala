@@ -13,9 +13,16 @@
  *
  * You should have received a copy of the GNU Library General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-[DBus (name = "io.elementary.pantheon.XRDesktopService")]
-public interface XRIndicator.Services.XRDesktopService : Object {
-    public abstract bool enabled { owned get; set; }
+[DBus (name = "io.elementary.pantheon.XRDesktop")]
+public class XRDesktopIndicator.Services.DBusService : Object {
+    public bool enabled { get; set; default = false; }
+    public signal void enabled_changed (bool enabled);
+
+    construct {
+        notify["enabled"].connect (() => {
+            enabled_changed (enabled);
+        });
+    }
 }

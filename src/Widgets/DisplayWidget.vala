@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class XRIndicator.Widgets.DisplayWidget : Gtk.Spinner {
-    public XRIndicator.Services.ObjectManager object_manager { get; construct; }
+public class XRDesktopIndicator.Widgets.DisplayWidget : Gtk.Spinner {
+    public XRDesktopIndicator.Services.DBusService dbus_service { get; construct; }
 
     private unowned Gtk.StyleContext style_context;
 
-    public DisplayWidget (XRIndicator.Services.ObjectManager object_manager) {
-        Object (object_manager: object_manager);
+    public DisplayWidget (XRDesktopIndicator.Services.DBusService dbus_service) {
+        Object (dbus_service: dbus_service);
     }
 
     construct {
@@ -33,37 +33,11 @@ public class XRIndicator.Widgets.DisplayWidget : Gtk.Spinner {
         style_context.add_class ("xrdesktop-icon");
         style_context.add_class ("disabled");
 
-        object_manager.global_state_changed.connect ((state, connected) => {
-            set_icon ();
-        });
-
-        if (object_manager.retrieve_finished) {
-            set_icon ();
-        } else {
-            object_manager.notify["retrieve-finished"].connect (set_icon);
-        }
-
-        button_press_event.connect ((e) => {
-            if (e.button == Gdk.BUTTON_MIDDLE) {
-                object_manager.set_global_state.begin (!object_manager.get_global_state ());
-                return Gdk.EVENT_STOP;
-            }
-
-            return Gdk.EVENT_PROPAGATE;
-        });
-    }
-
-    private void set_icon () {
-        if (get_realized ()) {
-            update_icon ();
-        } else {
-            /* When called from constructor usually not realized */
-            realize.connect_after (update_icon);
-        }
+        dbus_service.notify["enabled"].connect (update_icon);
     }
 
     private void update_icon () {
-        var enabled = object_manager.is_enabled;
+        var enabled = dbus_service.enabled;
         string description;
         string context;
 

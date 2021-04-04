@@ -26,8 +26,7 @@ wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', 
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
-    'src/Services/Manager.vala',
-    'src/Services/XRDesktopService.vala',
+    'src/Services/DBusService.vala',
     'src/Widgets/DisplayWidget.vala',
     'src/Widgets/PopoverWidget.vala',
     gresource,
@@ -37,6 +36,7 @@ shared_module(
         dependency('granite', version: '>=6.0.0'),
         dependency('gtk+-3.0'),
         dependency('libnotify'),
+        dependency('gio-2.0'),
         wingpanel_dep
     ],
     install: true,

@@ -7,6 +7,7 @@
 You'll need the following dependencies:
 
     gobject-introspection
+    gio-2.0
     libglib2.0-dev
     libgranite-dev >= 6.0.0
     libnotify-dev

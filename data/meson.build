@@ -5,6 +5,3 @@ i18n.merge_file(
     install_dir: join_paths(datadir, 'metainfo'),
     install: true
 )
-
-# XRService DBus interface
-subdir('xrdesktopservice')

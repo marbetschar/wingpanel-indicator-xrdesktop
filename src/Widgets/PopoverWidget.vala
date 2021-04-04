@@ -15,15 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class XRIndicator.Widgets.PopoverWidget : Gtk.Box {
-    public XRIndicator.Services.ObjectManager object_manager { get; construct; }
+public class XRDesktopIndicator.Widgets.PopoverWidget : Gtk.Box {
+    public XRDesktopIndicator.Services.DBusService dbus_service { get; construct; }
     public bool is_in_session { get; construct; }
 
     private Granite.SwitchModelButton main_switch;
 
-    public PopoverWidget (XRIndicator.Services.ObjectManager object_manager, bool is_in_session) {
+    public PopoverWidget (XRDesktopIndicator.Services.DBusService dbus_service, bool is_in_session) {
         Object (
-            object_manager: object_manager,
+            dbus_service: dbus_service,
             is_in_session: is_in_session
         );
     }
@@ -32,29 +32,12 @@ public class XRIndicator.Widgets.PopoverWidget : Gtk.Box {
         orientation = Gtk.Orientation.VERTICAL;
 
         main_switch = new Granite.SwitchModelButton (_("Mirror Desktop to XR")) {
-            active = object_manager.get_global_state ()
+            active = dbus_service.enabled
         };
         main_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+        main_switch.bind_property ("active", dbus_service, "enabled", GLib.BindingFlags.BIDIRECTIONAL);
 
         add (main_switch);
-
-        main_switch.active = object_manager.get_global_state ();
-
-        update_ui_state (object_manager.get_global_state ());
         show_all ();
-
-        main_switch.notify["active"].connect (() => {
-            object_manager.set_global_state.begin (main_switch.active);
-        });
-
-        object_manager.global_state_changed.connect ((state) => {
-            update_ui_state (state);
-        });
-    }
-
-    private void update_ui_state (bool state) {
-        if (main_switch.active != state) {
-            main_switch.active = state;
-        }
     }
 }

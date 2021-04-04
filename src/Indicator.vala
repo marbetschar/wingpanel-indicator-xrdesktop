@@ -15,12 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class XRIndicator.Indicator : Wingpanel.Indicator {
+public class XRDesktopIndicator.Indicator : Wingpanel.Indicator {
     public bool is_in_session { get; construct; default = false; }
 
     private Widgets.PopoverWidget popover_widget;
     private Widgets.DisplayWidget dynamic_icon;
-    private Services.ObjectManager object_manager;
+
+    private Services.DBusService dbus_service;
+    private uint dbus_service_registration_id = 0;
 
     public Indicator (bool is_in_session) {
         Object (
@@ -30,7 +32,30 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
     }
 
     construct {
-        object_manager = new XRIndicator.Services.ObjectManager ();
+        this.dbus_service = new Services.DBusService ();
+
+        Bus.own_name (
+            BusType.SESSION,
+            "io.elementary.pantheon.XRDesktop",
+            BusNameOwnerFlags.NONE,
+            (connection, name) => {
+                debug ("Aquired DBus connection named '%s'", name);
+                try {
+                    this.dbus_service_registration_id = connection.register_object ("/io/elementary/pantheon/xrdesktop", this.dbus_service);
+                } catch (GLib.IOError e) {
+                    critical ("IOError while aquiring DBus connection named '%s': %s", name, e.message);
+                }
+            },
+            () => {},
+            (connection, name) => {
+                if (this.dbus_service_registration_id != 0) {
+                    connection.unregister_object (this.dbus_service_registration_id);
+                    this.dbus_service_registration_id = 0;
+
+                }
+                warning ("Could not aquire DBus connection named '%s', or the connection was closed.", name);
+            }
+        );
 
         weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_default ();
         default_theme.add_resource_path ("/io/elementary/wingpanel/xrdesktop");
@@ -38,7 +63,7 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
-            dynamic_icon = new Widgets.DisplayWidget (object_manager);
+            dynamic_icon = new Widgets.DisplayWidget (dbus_service);
         }
         this.visible = true;
         return dynamic_icon;
@@ -46,7 +71,7 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (popover_widget == null) {
-            popover_widget = new Widgets.PopoverWidget (object_manager, is_in_session);
+            popover_widget = new Widgets.PopoverWidget (dbus_service, is_in_session);
         }
 
         return popover_widget;
@@ -62,7 +87,7 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
 
 public Wingpanel.Indicator get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug ("Activating XR Desktop Indicator");
-    var indicator = new XRIndicator.Indicator (server_type == Wingpanel.IndicatorManager.ServerType.SESSION);
+    var indicator = new XRDesktopIndicator.Indicator (server_type == Wingpanel.IndicatorManager.ServerType.SESSION);
 
     return indicator;
 }
