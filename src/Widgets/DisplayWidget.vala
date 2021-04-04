@@ -26,11 +26,11 @@ public class XRIndicator.Widgets.DisplayWidget : Gtk.Spinner {
 
     construct {
         var provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("io/elementary/wingpanel/xr/indicator.css");
+        provider.load_from_resource ("io/elementary/wingpanel/xrdesktop/indicator.css");
 
         style_context = get_style_context ();
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        style_context.add_class ("xr-icon");
+        style_context.add_class ("xrdesktop-icon");
         style_context.add_class ("disabled");
 
         object_manager.global_state_changed.connect ((state, connected) => {

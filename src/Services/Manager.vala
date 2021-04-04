@@ -32,7 +32,7 @@ public class XRIndicator.Services.ObjectManager : Object {
             object_manager = yield new GLib.DBusObjectManagerClient.for_bus.begin (
                 BusType.SYSTEM,
                 GLib.DBusObjectManagerClientFlags.NONE,
-                "org.gnome.Shell",
+                "io.elementary.pantheon.XRDesktopService",
                 "/",
                 object_manager_proxy_get_type,
                 null
@@ -56,16 +56,16 @@ public class XRIndicator.Services.ObjectManager : Object {
     }
 
     //TODO: Do not rely on this when it is possible to do it natively in Vala
-    [CCode (cname="xr_indicator_services_xrservice_proxy_get_type")]
-    extern static GLib.Type get_xrservice_proxy_type ();
+    [CCode (cname="xr_indicator_services_xrdesktopservice_proxy_get_type")]
+    extern static GLib.Type get_xrdesktopservice_proxy_type ();
 
     private GLib.Type object_manager_proxy_get_type (DBusObjectManagerClient manager, string object_path, string? interface_name) {
         if (interface_name == null)
             return typeof (GLib.DBusObjectProxy);
 
         switch (interface_name) {
-            case "io.elementary.pantheon.XRService":
-                return get_xrservice_proxy_type ();
+            case "io.elementary.pantheon.XRDesktopService":
+                return get_xrdesktopservice_proxy_type ();
             default:
                 return typeof (GLib.DBusProxy);
         }

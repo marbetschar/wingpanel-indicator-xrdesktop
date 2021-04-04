@@ -24,20 +24,23 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
 
     public Indicator (bool is_in_session) {
         Object (
-            code_name: "xr",
+            code_name: "xrdesktop",
             is_in_session: is_in_session
         );
     }
 
     construct {
         object_manager = new XRIndicator.Services.ObjectManager ();
+
+        weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_default ();
+        default_theme.add_resource_path ("/io/elementary/wingpanel/xrdesktop");
     }
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
             dynamic_icon = new Widgets.DisplayWidget (object_manager);
         }
-
+        this.visible = true;
         return dynamic_icon;
     }
 
@@ -58,7 +61,7 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
 }
 
 public Wingpanel.Indicator get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Activating XR Indicator");
+    debug ("Activating XR Desktop Indicator");
     var indicator = new XRIndicator.Indicator (server_type == Wingpanel.IndicatorManager.ServerType.SESSION);
 
     return indicator;

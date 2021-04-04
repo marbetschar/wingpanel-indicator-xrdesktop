@@ -31,7 +31,7 @@ public class XRIndicator.Widgets.PopoverWidget : Gtk.Box {
     construct {
         orientation = Gtk.Orientation.VERTICAL;
 
-        main_switch = new Granite.SwitchModelButton (_("Mirror to XR")) {
+        main_switch = new Granite.SwitchModelButton (_("Mirror Desktop to XR")) {
             active = object_manager.get_global_state ()
         };
         main_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);

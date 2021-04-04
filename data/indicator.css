@@ -22,24 +22,9 @@
     min-width: 24px;
     opacity: 1;
     transition: none;
-    -gtk-icon-source: -gtk-icontheme("bluetooth-active-symbolic");
+    -gtk-icon-source: -gtk-icontheme("xrdesktop-active-symbolic");
 }
 
 .xrdesktop-icon.disabled {
-    animation: xrdesktop-disabled 160ms cubic-bezier(0.4, 0.0, 0.2, 1);
-    -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-symbolic");
-}
-
-@keyframes xrdesktop-disabled {
-    0% { -gtk-icon-source: -gtk-icontheme("bluetooth-active-symbolic"); }
-    10% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-10-symbolic"); opacity: 0.94; }
-    20% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-20-symbolic"); opacity: 0.88; }
-    30% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-30-symbolic"); opacity: 0.82; }
-    40% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-40-symbolic"); opacity: 0.76; }
-    50% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-50-symbolic"); opacity: 0.70; }
-    60% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-60-symbolic"); opacity: 0.64; }
-    70% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-70-symbolic"); opacity: 0.58; }
-    80% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-80-symbolic"); opacity: 0.52; }
-    90% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-90-symbolic"); opacity: 0.46; }
-    100% { -gtk-icon-source: -gtk-icontheme("bluetooth-disabled-symbolic"); }
+    -gtk-icon-source: -gtk-icontheme("xrdesktop-disabled-symbolic");
 }
