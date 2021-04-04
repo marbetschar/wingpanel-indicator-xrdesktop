@@ -27,6 +27,7 @@ shared_module(
     meson.project_name(),
     'src/Indicator.vala',
     'src/Services/Manager.vala',
+    'src/Services/XRService.vala',
     'src/Widgets/DisplayWidget.vala',
     'src/Widgets/PopoverWidget.vala',
     gresource,

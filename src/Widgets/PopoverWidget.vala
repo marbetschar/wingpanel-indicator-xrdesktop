@@ -47,7 +47,7 @@ public class XRIndicator.Widgets.PopoverWidget : Gtk.Box {
             object_manager.set_global_state.begin (main_switch.active);
         });
 
-        object_manager.global_state_changed.connect ((state, paired) => {
+        object_manager.global_state_changed.connect ((state) => {
             update_ui_state (state);
         });
     }

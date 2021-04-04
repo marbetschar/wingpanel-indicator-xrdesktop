@@ -18,15 +18,12 @@
 public class XRIndicator.Services.ObjectManager : Object {
     public signal void global_state_changed (bool enabled);
 
-    public bool has_object { get; private set; default = false; }
     public bool retrieve_finished { get; private set; default = false; }
-    private Settings settings;
     private GLib.DBusObjectManagerClient object_manager;
 
-    public bool is_enabled {get; private set; default = false; }
+    public bool is_enabled { get; private set; default = false; }
 
     construct {
-        settings = new Settings ("io.elementary.desktop.wingpanel.xr");
         create_manager.begin ();
     }
 
@@ -35,7 +32,7 @@ public class XRIndicator.Services.ObjectManager : Object {
             object_manager = yield new GLib.DBusObjectManagerClient.for_bus.begin (
                 BusType.SYSTEM,
                 GLib.DBusObjectManagerClientFlags.NONE,
-                "org.bluez",
+                "org.gnome.Shell",
                 "/",
                 object_manager_proxy_get_type,
                 null
@@ -58,79 +55,54 @@ public class XRIndicator.Services.ObjectManager : Object {
         retrieve_finished = true;
     }
 
+    //TODO: Do not rely on this when it is possible to do it natively in Vala
+    [CCode (cname="xr_indicator_services_xrservice_proxy_get_type")]
+    extern static GLib.Type get_xrservice_proxy_type ();
+
+    private GLib.Type object_manager_proxy_get_type (DBusObjectManagerClient manager, string object_path, string? interface_name) {
+        if (interface_name == null)
+            return typeof (GLib.DBusObjectProxy);
+
+        switch (interface_name) {
+            case "io.elementary.pantheon.XRService":
+                return get_xrservice_proxy_type ();
+            default:
+                return typeof (GLib.DBusProxy);
+        }
+    }
+
     private void on_interface_added (GLib.DBusObject object, GLib.DBusInterface iface) {
-        if (iface is XRIndicator.Services.Device) {
-            unowned XRIndicator.Services.Device device = (XRIndicator.Services.Device) iface;
+        if (iface is XRIndicator.Services.XRService) {
+            unowned XRIndicator.Services.XRService xr = (XRIndicator.Services.XRService) iface;
 
-            if (device.paired) {
-                device_added (device);
-            }
-
-            ((DBusProxy) device).g_properties_changed.connect ((changed, invalid) => {
-                var connected = changed.lookup_value ("Connected", new VariantType ("b"));
-                if (connected != null) {
-                    check_global_state ();
-                }
-
-                var paired = changed.lookup_value ("Paired", new VariantType ("b"));
-                if (paired != null) {
-                    if (device.paired) {
-                        device_added (device);
-                    } else {
-                        device_removed (device);
-                    }
-
-                    check_global_state ();
-                }
-            });
-
-            check_global_state ();
-        } else if (iface is XRIndicator.Services.Adapter) {
-            unowned XRIndicator.Services.Adapter adapter = (XRIndicator.Services.Adapter) iface;
-            has_object = true;
-
-            ((DBusProxy) adapter).g_properties_changed.connect ((changed, invalid) => {
+            ((DBusProxy) xr).g_properties_changed.connect ((changed, invalid) => {
                 var enabled = changed.lookup_value ("enabled", new VariantType ("b"));
-                if (enabled != null) {
-                    check_global_state ();
+                if (enabled != null && enabled != is_enabled) {
+                    is_enabled = enabled.get_boolean ();
+
+                    global_state_changed (is_enabled);
                 }
             });
         }
     }
 
-    public void check_global_state () {
-        /* As this is called within a signal handler, it should be in a Idle loop  else
-         * races occur */
-        Idle.add (() => {
-            var enabled = get_global_state ();
-
-            /* Only signal if actually changed */
-            if (enabled != is_enabled) {
-                is_enabled = enabled;
+    private void on_interface_removed (GLib.DBusObject object, GLib.DBusInterface iface) {
+        if (iface is XRIndicator.Services.XRService) {
+            if (is_enabled) {
+                is_enabled = false;
                 global_state_changed (is_enabled);
             }
-            return false;
-        });
+        }
     }
 
     public bool get_global_state () {
-        return false;
+        return is_enabled;
     }
 
     public async void set_global_state (bool state) {
-        /* `is_enabled` property will be set by the check_global state () callback.
-        Do not set now so that global_state_changed signal will be emitted. */
-
-        settings.set_boolean ("xr-enabled", state);
-    }
-
-    public async void set_last_state () {
-        bool last_state = settings.get_boolean ("xr-enabled");
-
-        if (get_global_state () != last_state) {
-            yield set_global_state (last_state);
+        if (state != is_enabled) {
+            is_enabled = state;
+            global_state_changed (is_enabled);
         }
-
-        check_global_state ();
     }
 }

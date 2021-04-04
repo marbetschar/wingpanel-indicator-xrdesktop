@@ -24,24 +24,13 @@ public class XRIndicator.Indicator : Wingpanel.Indicator {
 
     public Indicator (bool is_in_session) {
         Object (
-            code_name: Wingpanel.Indicator.XR,
+            code_name: "xr",
             is_in_session: is_in_session
         );
     }
 
     construct {
         object_manager = new XRIndicator.Services.ObjectManager ();
-        object_manager.bind_property ("has-object", this, "visible", GLib.BindingFlags.SYNC_CREATE);
-
-        if (object_manager.has_object) {
-            object_manager.set_last_state.begin ();
-        }
-
-        object_manager.notify["has-object"].connect (() => {
-            if (object_manager.has_object) {
-                object_manager.set_last_state.begin ();
-            }
-        });
     }
 
     public override Gtk.Widget get_display_widget () {

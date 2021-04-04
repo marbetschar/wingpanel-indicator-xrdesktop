@@ -6,8 +6,5 @@ i18n.merge_file(
     install: true
 )
 
-install_data(
-    'gschema.xml',
-    rename: 'io.elementary.desktop.wingpanel.xr.gschema.xml',
-    install_dir: join_paths(datadir, 'glib-2.0', 'schemas')
-)
+# XRService DBus interface
+subdir('xrservice')

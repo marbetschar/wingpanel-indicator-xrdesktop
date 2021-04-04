@@ -1,0 +1,5 @@
+<node>
+    <interface name="io.elementary.pantheon.XRService">
+        <property name="enabled" type="b" access="readwrite" />
+    </interface>
+</node>

@@ -37,7 +37,7 @@ public class XRIndicator.Widgets.DisplayWidget : Gtk.Spinner {
             set_icon ();
         });
 
-        if (object_manager.has_object && object_manager.retrieve_finished) {
+        if (object_manager.retrieve_finished) {
             set_icon ();
         } else {
             object_manager.notify["retrieve-finished"].connect (set_icon);
@@ -63,26 +63,18 @@ public class XRIndicator.Widgets.DisplayWidget : Gtk.Spinner {
     }
 
     private void update_icon () {
-        var state = object_manager.is_powered;
-        var connected = object_manager.is_connected;
+        var enabled = object_manager.is_enabled;
         string description;
         string context;
 
-        if (state) {
+        if (enabled) {
             style_context.remove_class ("disabled");
-            context = _("Middle-click to turn XR off");
-            if (connected) {
-                style_context.add_class ("paired");
-                description = _("XR connected");
-            } else {
-                style_context.remove_class ("paired");
-                description = _("XR is on");
-            }
+            description = _("Mirroring to XR is enabled");
+            context = _("Middle-click to disable mirroring to XR");
         } else {
-            style_context.remove_class ("paired");
             style_context.add_class ("disabled");
-            description = _("XR is off");
-            context = _("Middle-click to turn XR on");
+            description = _("Mirroring to XR is disabled");
+            context = _("Middle-click to enable mirroring to XR");
         }
 
         tooltip_markup = "%s\n%s".printf (
